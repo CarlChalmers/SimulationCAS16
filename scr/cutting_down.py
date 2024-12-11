@@ -1,5 +1,7 @@
 from scr.forest_model import  *
 
+## simulation ##
+
 def cut_down_perimiter(forest,forest_state_manager, cluster_size,cluster_middle_point, radius):
     # Calculate the center of the diseased cluster
     Ni, Nj = forest.shape
