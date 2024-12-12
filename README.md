@@ -2,6 +2,8 @@
 # Group 16
 # Group Members: Carl Kylebäck Wennerlöf, Calle Olin, Robin Oscarsson, Miranda Carlsson, Mattias Qian, Youliang Zhu
 
+Comments for code version 2 from kyrie: add loss function and a results file for plots and graphs. Adjust the parameters to make simulation more realistic, details see <time dimension definition> in README.md. And suggest that we can do test in current test files instead of in main.py, like codes in vaxinate_test.py under test folder, we can run this file directly and test it
+
 Basic asuumptions for the model: 
    This project simulates the dynamics of a forest ecosystem, including tree growth, disease spread, vaccination strategies, and cutting-down mechanisms. The simulation is implemented in Python and visualized using `matplotlib`.
 
