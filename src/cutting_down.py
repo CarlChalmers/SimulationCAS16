@@ -1,4 +1,11 @@
-from scr.forest_model import  *
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+from matplotlib.patches import Patch
+from IPython.display import clear_output
+
+from src.forest_model import  *
 
 ## simulation ##
 

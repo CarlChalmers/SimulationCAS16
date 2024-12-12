@@ -54,7 +54,7 @@ class Tree:
         return self.immune
 
 class ForestStateManager:
-    def __init__(self, latent_days_threshold=10, sick_days_threshold=5, dead_days_threshold=3):
+    def __init__(self, latent_days_threshold, sick_days_threshold, dead_days_threshold):
         """
         Initialize the state manager.
         :param latent_days_threshold: Threshold after which latent trees turn into sick trees.
@@ -133,9 +133,7 @@ def initialize_forest(forest_size, forest_cover_rate, forest_state_manager):
                 forest[i, j] = Tree("EMPTY",latent_days_threshold=forest_state_manager.latent_days_threshold,sick_days_threshold=forest_state_manager.sick_days_threshold,dead_days_threshold=forest_state_manager.dead_days_threshold, position=(i, j))
                 forest_state_manager.empty_trees.append(forest[i, j])
     return forest, forest_state_manager
-
-
-def forest_update(forest_state_manager, iter_num, grow_tree_prob,debug):
+def forest_update(forest_state_manager, iter_num, grow_tree_prob, dead_trees, debug):
     """
     Updates the state of the entire forest: transitions trees from LATENT to SICK,
     from SICK to DEAD, and from DEAD to EMPTY based on their respective thresholds.
@@ -161,6 +159,7 @@ def forest_update(forest_state_manager, iter_num, grow_tree_prob,debug):
         tree.sick_days += 1
         if tree.sick_days >= tree.sick_days_threshold:
             forest_state_manager.update_state(tree, "DEAD")
+            dead_trees += 1
 
     # Update all dead trees
     for tree in forest_state_manager.get_dead_trees()[:]:
@@ -173,8 +172,7 @@ def forest_update(forest_state_manager, iter_num, grow_tree_prob,debug):
             "dead trees:", len(forest_state_manager.dead_trees),
             "emptys:", len(forest_state_manager.empty_trees))
 
-    return forest_state_manager
-
+    return forest_state_manager, dead_trees
 def initialize_disease(forest, num_infected, forest_state_manager):
     """
     Randomly select `num_infected` trees in the forest and set them to SICK state.
@@ -194,7 +192,6 @@ def initialize_disease(forest, num_infected, forest_state_manager):
             infected_count += 1
 
     return forest, forest_state_manager
-
 def propagate_disease_pbc(forest, forest_state_manager, infect_prob_sick, infect_prob_latent):
     """
     Propagate the disease from sick trees to their neighbors.
@@ -257,11 +254,9 @@ def propagate_disease(forest, forest_state_manager, infect_prob_sick, infect_pro
     return forest, forest_state_manager
 
 
-
 ######################################
 #       Utilities for Simulation     #
 ######################################
-
 
 def visualize_forest(forest):
     """
@@ -383,8 +378,6 @@ def find_disease_clusters(forest,min_size=10):
 
     return clusters
 
-
-
 def plot_state_counts(state_counts, epochs):
     """
     Plot the count of different tree states over epochs.
@@ -398,3 +391,7 @@ def plot_state_counts(state_counts, epochs):
     plt.legend(loc="upper right")
     plt.grid(True)
     plt.show()
+
+def loss_function(a, b, c, d, e, vaxinate_cost, dead_trees, sum_cuted_down, immune_treees_healthy, disease_eliminated_days):
+    value = a * vaxinate_cost + b * dead_trees + c * sum_cuted_down - d * immune_treees_healthy + e * disease_eliminated_days
+    return value

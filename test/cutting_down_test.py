@@ -7,9 +7,9 @@ from IPython.display import clear_output
 import sys
 sys.path.insert(0,"C:\Chalmers\Simulation")
 
-from scr.forest_model import *
-from scr.cutting_down import *
-from scr.vaxinate_model import *
+from src.forest_model import *
+from src.cutting_down import *
+from src.vaxinate_model import *
 
 def test_forest_model():
 
