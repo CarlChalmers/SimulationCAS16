@@ -19,7 +19,7 @@ def vaxinate_perimiter(forest,forest_state_manager, cluster_size, cluster_middle
             distance = np.sqrt((i - cluster_middle_point[0]) ** 2 + (j - cluster_middle_point[1]) ** 2)
 
             # vaxinate
-            if radius - 0.5 <= distance <= radius + 0.5 :
+            if radius - 0.5 <= distance <= radius + 0.5 and forest[i,j].immune == False: ## check this logic if it is correct
               vaxinate_cost += 1
               if random.random() < unsucceceful_vaccination:
                 continue
