@@ -6,7 +6,8 @@ from matplotlib.patches import Patch
 from IPython.display import clear_output
 
 import sys
-sys.path.insert(0,"D:\研究生学习\Simulation of Complex System\GIT\SimulationCAS16")
+# sys.path.insert(0,"D:\研究生学习\Simulation of Complex System\GIT\SimulationCAS16")
+sys.path.insert(0,"D:\Projects\Simulations2024\SimulationCAS16")
 
 from src.forest_model import *
 from src.cutting_down import *
@@ -36,9 +37,9 @@ def test_forest_model():
     forest_size = 100
     num_infected = 10
     forest_cover_rate = 0.95
-    infect_prob_sick = 0.05
-    infect_prob_latent = 0.02
-    grow_tree_prob = 0.05
+    infect_prob_sick = 0.3
+    infect_prob_latent = 0.2
+    grow_tree_prob = 0.02
     unsucceceful_vaccination = 0.15
     latent_days_immune_threshold = 15
 
