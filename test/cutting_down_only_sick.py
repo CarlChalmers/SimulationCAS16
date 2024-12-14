@@ -25,16 +25,16 @@ def test_forest_model():
         "IMMUNE_HEALTHY": []
     }
     forest_state_manager = ForestStateManager(7,10,15)
-    N_skip = 1
+    N_skip = 20
     iter_num = 1
     epochs = 500
     forest_size = 100
     num_infected = 10
     forest_cover_rate = 0.95
     # low: 0.06 medium: 0.14 high: 0.35
-    infect_prob_sick = 0.35
+    infect_prob_sick = 0.06  
     # low: 0.04 medium: 0.08 high: 0.2
-    infect_prob_latent = 0.2
+    infect_prob_latent = 0.04
     grow_tree_prob = 0.01
     unsucceceful_vaccination = 0.20
     latent_days_immune_threshold = 5
@@ -42,7 +42,7 @@ def test_forest_model():
 
     a = 1.5
     b = 2
-    c = 0
+    c = 1
     d = 1
     e = 0.7
     vaxinate_cost = 0
@@ -92,6 +92,7 @@ def test_forest_model():
     print("Dead trees is: ", dead_trees)
     print("Number of immuned healthy trees is: ", immune_treees_healthy)
     print("Disease eliminated days is: ", disease_eliminated_days)
+    print("Sum of cut down trees: ", sum_cuted_down)
     loss_value = loss_function(a, b, c, d, e, vaxinate_cost, dead_trees, sum_cuted_down, immune_treees_healthy, disease_eliminated_days)
     print("Loss value is: ", loss_value)
     current_epoch = i

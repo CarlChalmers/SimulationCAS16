@@ -1,0 +1,32 @@
+--------------- LOW ---------------
+After  141 days, the forest disease is eliminated!
+Vaxinate cost is:  0
+Dead trees is:  129
+Number of immuned healthy trees is:  0
+Disease eliminated days is:  141
+Sum of cut down trees:  155
+Loss value is:  511.7
+Iter Number: 141 latent trees: 0 sick trees: 0 dead trees: 1 emptys: 274
+
+
+-------------- MEDIUM -----------
+
+After  59 days, the forest disease is eliminated!
+Vaxinate cost is:  0
+Dead trees is:  232
+Number of immuned healthy trees is:  0
+Disease eliminated days is:  59
+Sum of cut down trees:  307
+Loss value is:  812.3
+Iter Number: 59 latent trees: 0 sick trees: 0 dead trees: 22 emptys: 1090
+
+------------- HIGH ----------------
+
+After  72 days, the forest disease is eliminated!
+Vaxinate cost is:  0
+Dead trees is:  381
+Number of immuned healthy trees is:  0
+Disease eliminated days is:  72
+Sum of cut down trees:  366
+Loss value is:  1178.4
+Iter Number: 72 latent trees: 0 sick trees: 0 dead trees: 20 emptys: 1171

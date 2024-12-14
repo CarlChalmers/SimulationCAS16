@@ -12,25 +12,30 @@ from src.forest_model import  *
 def cut_down_perimiter(forest,forest_state_manager, cluster_size,cluster_middle_point, radius):
     # Calculate the center of the diseased cluster
     Ni, Nj = forest.shape
+    trees_cut_down = 0
     # Iterate through all cells in the forest
     for i in range(Ni):
         for j in range(Nj):
+            
             # Calculate the distance from the current cell to the center of the cluster
             distance = np.sqrt((i - cluster_middle_point[0]) ** 2 + (j - cluster_middle_point[1]) ** 2)
 
             # cut down
             if radius - 0.5 <= distance <= radius + 0.5 :
-                forest_state_manager.update_state(forest[i,j], "EMPTY")
-    return forest,forest_state_manager
+                if not forest[i,j].is_empty():
+                    trees_cut_down += 1
+                    forest_state_manager.update_state(forest[i,j], "EMPTY")
+    return forest,forest_state_manager,trees_cut_down
 
 def prevention_menthod_perimiter(forest,forest_state_manager):
   clusters = find_disease_clusters(forest)
+  trees_cut_down = 0
   for cluster in clusters:
     size = cluster["size"]
     if size < 10:
       continue
-    forest,forest_state_manager = cut_down_perimiter(forest,forest_state_manager, size,cluster["middle_point"],np.sqrt(size)+1)
-  return forest,forest_state_manager
+    forest,forest_state_manager,trees_cut_down = cut_down_perimiter(forest,forest_state_manager, size,cluster["middle_point"],np.sqrt(size)+1)
+  return forest,forest_state_manager,trees_cut_down
 
 def cut_down_sick_clusters(forest,forest_state_manager,min_size=4):
     """
