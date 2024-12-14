@@ -41,7 +41,7 @@ def test_forest_model():
     infect_prob_sick = 0.06
     # low: 0.04 medium: 0.08 high: 0.2
     infect_prob_latent = 0.04
-    grow_tree_prob = 0.02
+    grow_tree_prob = 0.01
     unsucceceful_vaccination = 0.15
     latent_days_immune_threshold = 15
 
