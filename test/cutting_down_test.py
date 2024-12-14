@@ -25,14 +25,15 @@ def test_forest_model():
         "IMMUNE_HEALTHY": []
     }
     forest_state_manager = ForestStateManager(7,10,15)
-    N_skip = 20
+    N_skip = 2
     iter_num = 1
     epochs = 500
     forest_size = 100
     num_infected = 5
     forest_cover_rate = 0.99
-    infect_prob_sick = 0.2
-    infect_prob_latent = 0.1
+    # low: 0.06 medium: 0.14 high: 0.35
+    infect_prob_sick = 0.06
+    # low: 0.04 medium: 0.08 high: 0.2
     grow_tree_prob = 0.01
     unsucceceful_vaccination = 0.1
     latent_days_immune_threshold = 15
