@@ -39,17 +39,17 @@ def test_forest_model():
     forest_cover_rate = 0.95
     # Spreading rates for sick trees: low: 0.06 medium: 0.14 high: 0.35
     # Spreading rates for latent trees: low: 0.04 medium: 0.08 high: 0.2
-    infect_prob_sick = 0.35
-    infect_prob_latent = 0.2
+    infect_prob_sick = 0.06
+    infect_prob_latent = 0.04
     grow_tree_prob = 0.01
     unsucceceful_vaccination = 0.15
     latent_days_immune_threshold = 15
 
     ## Parameters for loss function
-    a = 1.5
+    a = 2
     b = 2
     c = 0
-    d = 1
+    d = 3
     e = 0.7
     vaxinate_cost = 0
     dead_trees = 0
