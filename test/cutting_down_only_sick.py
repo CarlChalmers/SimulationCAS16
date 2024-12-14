@@ -32,13 +32,25 @@ def test_forest_model():
     num_infected = 10
     forest_cover_rate = 0.95
     # low: 0.06 medium: 0.14 high: 0.35
-    infect_prob_sick = 0.06
+    infect_prob_sick = 0.35
     # low: 0.04 medium: 0.08 high: 0.2
-    infect_prob_latent = 0.04
+    infect_prob_latent = 0.2
     grow_tree_prob = 0.01
     unsucceceful_vaccination = 0.20
     latent_days_immune_threshold = 5
+  
+
+    a = 1.5
+    b = 2
+    c = 0
+    d = 1
+    e = 0.7
+    vaxinate_cost = 0
     dead_trees = 0
+    sum_cuted_down = 0
+    immune_treees_healthy = 0
+    disease_eliminated_days = 0
+
     # 1. Initialize the forest
     forest, forest_state_manager = initialize_forest(forest_size, forest_cover_rate, forest_state_manager)
     visualize_forest(forest)
@@ -46,15 +58,16 @@ def test_forest_model():
     # 2. Initialize the disease
     forest, forest_state_manager = initialize_disease(forest, num_infected, forest_state_manager)
     visualize_forest(forest)
-
+    trees_cut_down = 0
 
     # 4. Propagate the disease
     for i in range(epochs):
         forest, forest_state_manager = propagate_disease(forest, forest_state_manager, infect_prob_sick, infect_prob_latent)
         forest_state_manager,dead_trees = forest_update(forest_state_manager, iter_num, grow_tree_prob,dead_trees,False)
+        trees_cut_down = 0
 
-
-        forest,forest_state_manager = cut_down_sick_clusters(forest,forest_state_manager)
+        forest,forest_state_manager,trees_cut_down = cut_down_sick_clusters(forest,forest_state_manager)
+        sum_cuted_down+=trees_cut_down
 
         state_counts["HEALTHY"].append(len([tree for row in forest for tree in row if tree.is_healthy()]))
         state_counts["LATENT"].append(len([tree for row in forest for tree in row if tree.is_latent()]))
@@ -64,15 +77,28 @@ def test_forest_model():
         state_counts["IMMUNE_LATENT"].append(len([tree for row in forest for tree in row if tree.state == "IMMUNE_LATENT"]))
         state_counts["IMMUNE_HEALTHY"].append(len([tree for row in forest for tree in row if tree.state == "IMMUNE_HEALTHY"]))
 
+        if len(forest_state_manager.sick_trees) == 0 and len(forest_state_manager.latent_trees) == 0:
+           break
+
         # for cluster in find_disease_clusters(forest):
         #   print(cluster["middle_point"])
         if iter_num % N_skip == 0:
           visualize_forest(forest)
         iter_num += 1
-
+        
+    disease_eliminated_days = iter_num
+    print("After ", iter_num, "days, the forest disease is eliminated!")
+    print("Vaxinate cost is: ", vaxinate_cost)
+    print("Dead trees is: ", dead_trees)
+    print("Number of immuned healthy trees is: ", immune_treees_healthy)
+    print("Disease eliminated days is: ", disease_eliminated_days)
+    loss_value = loss_function(a, b, c, d, e, vaxinate_cost, dead_trees, sum_cuted_down, immune_treees_healthy, disease_eliminated_days)
+    print("Loss value is: ", loss_value)
+    current_epoch = i
     ## Final Step in one iteration
     forest_state_manager ,dead_trees= forest_update(forest_state_manager, iter_num, grow_tree_prob,dead_trees,True)
-    plot_state_counts(state_counts, epochs)
+    plot_state_counts(state_counts, current_epoch + 1)
+
 
 
 

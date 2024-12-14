@@ -32,7 +32,7 @@ def prevention_menthod_perimiter(forest,forest_state_manager):
     forest,forest_state_manager = cut_down_perimiter(forest,forest_state_manager, size,cluster["middle_point"],np.sqrt(size)+1)
   return forest,forest_state_manager
 
-def cut_down_sick_clusters(forest,forest_state_manager,min_size=10):
+def cut_down_sick_clusters(forest,forest_state_manager,min_size=4):
     """
     Identify clusters of connected 'SICK' and 'DEAD' trees in the forest.
     Each cluster is a group of adjacent (vertically or horizontally) sick or dead trees.
@@ -41,6 +41,7 @@ def cut_down_sick_clusters(forest,forest_state_manager,min_size=10):
              - size: Number of trees in the cluster
              - middle_point: The center position of the cluster (as (x, y))
     """
+    amount_cut_down = 0
     forest_size = len(forest)
     visited = np.zeros((forest_size, forest_size), dtype=bool)  # Track visited trees
     clusters = []  # List to store information about each cluster
@@ -83,8 +84,9 @@ def cut_down_sick_clusters(forest,forest_state_manager,min_size=10):
                 cluster_positions = dfs(i, j)
                 if len(cluster_positions) >= min_size:
                     for cluster in cluster_positions:
+                      amount_cut_down += 1
                       forest_state_manager.update_state(forest[cluster[0],cluster[1]], "EMPTY")
 
                     
 
-    return forest,forest_state_manager
+    return forest,forest_state_manager,amount_cut_down
