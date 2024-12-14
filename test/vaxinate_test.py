@@ -6,8 +6,8 @@ from matplotlib.patches import Patch
 from IPython.display import clear_output
 
 import sys
-# sys.path.insert(0,"D:\研究生学习\Simulation of Complex System\GIT\SimulationCAS16")
-sys.path.insert(0,"D:\Projects\Simulations2024\SimulationCAS16")
+sys.path.insert(0,"D:\研究生学习\Simulation of Complex System\GIT\SimulationCAS16")
+# sys.path.insert(0,"D:\Projects\Simulations2024\SimulationCAS16")
 
 from src.forest_model import *
 from src.cutting_down import *
@@ -37,11 +37,11 @@ def test_forest_model():
     forest_size = 100
     num_infected = 10
     forest_cover_rate = 0.95
-    # low: 0.06 medium: 0.14 high: 0.35
-    infect_prob_sick = 0.06
-    # low: 0.04 medium: 0.08 high: 0.2
-    infect_prob_latent = 0.04
-    grow_tree_prob = 0.02
+    # Spreading rates for sick trees: low: 0.06 medium: 0.14 high: 0.35
+    # Spreading rates for latent trees: low: 0.04 medium: 0.08 high: 0.2
+    infect_prob_sick = 0.35
+    infect_prob_latent = 0.2
+    grow_tree_prob = 0.01
     unsucceceful_vaccination = 0.15
     latent_days_immune_threshold = 15
 
@@ -83,25 +83,26 @@ def test_forest_model():
         state_counts["IMMUNE_HEALTHY"].append(len([tree for row in forest for tree in row if tree.state == "IMMUNE_HEALTHY"]))
 
         if len(forest_state_manager.sick_trees) == 0 and len(forest_state_manager.latent_trees) == 0:
-           disease_eliminated_days = iter_num
-           print("After ", iter_num, "days, the forest disease is eliminated!")
-           print("Vaxinate cost is: ", vaxinate_cost)
-           print("Dead trees is: ", dead_trees)
-           print("Number of immuned healthy trees is: ", immune_treees_healthy)
-           print("Disease eliminated days is: ", disease_eliminated_days)
-           loss_value = loss_function(a, b, c, d, e, vaxinate_cost, dead_trees, sum_cuted_down, immune_treees_healthy, disease_eliminated_days)
-           print("Loss value is: ", loss_value)
-           current_epoch = i
            break
 
         if iter_num % N_skip == 0:
           visualize_forest(forest)
+
+        print("Iteration: ", iter_num)
         iter_num += 1
 
-        print("Cureent day for simulation: ", iter_num)
+    disease_eliminated_days = iter_num
+    print("After ", iter_num, "days, the forest disease is eliminated!")
+    print("Vaxinate cost is: ", vaxinate_cost)
+    print("Dead trees is: ", dead_trees)
+    print("Number of immuned healthy trees is: ", immune_treees_healthy)
+    print("Disease eliminated days is: ", disease_eliminated_days)
+    loss_value = loss_function(a, b, c, d, e, vaxinate_cost, dead_trees, sum_cuted_down, immune_treees_healthy, disease_eliminated_days)
+    print("Loss value is: ", loss_value)
+    current_epoch = iter_num
 
     ## Final Step in one iteration
-    plot_state_counts(state_counts, current_epoch + 1)
+    plot_state_counts(state_counts, current_epoch)
 
 
 
